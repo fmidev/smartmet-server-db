@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  postgresql:
+    image: postgres:12.14
+    container_name: postgresql
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+        - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  phppgadmin:
+    image: dockage/phppgadmin:latest
+    environment:
+        - PHP_PG_ADMIN_SERVER_HOST=postgresql
+        - PHP_PG_ADMIN_SERVER_DEFAULT_DB=names
+    ports:
+      - '80:80'
+      - '443:443'
+    depends_on:
+      - postgresql
+
