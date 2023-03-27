@@ -14,12 +14,15 @@ services:
 
   phppgadmin:
     image: dockage/phppgadmin:latest
+    container_name: phppgadmin
     environment:
         - PHP_PG_ADMIN_SERVER_HOST=postgresql
         - PHP_PG_ADMIN_SERVER_DEFAULT_DB=names
     ports:
       - '80:80'
       - '443:443'
+    volumes:
+      - ./Postgres.php:/var/www/classes/database/Postgres.php
     depends_on:
       - postgresql
 
